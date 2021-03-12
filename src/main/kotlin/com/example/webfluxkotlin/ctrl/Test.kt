@@ -1,5 +1,6 @@
 package com.example.webfluxkotlin.ctrl
 
+import com.example.webfluxkotlin.service.TestService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -10,11 +11,14 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 @RequestMapping("/")
-class Test {
+class Test(
+    private val testService: TestService
+) {
 
     @GetMapping("test")
     suspend fun test(): String {
-        println("Current thread name: " + Thread.currentThread().name)
-        return "{}"
+        //println("Current thread name: " + Thread.currentThread().name)
+        val request = testService.request()
+        return request
     }
 }
